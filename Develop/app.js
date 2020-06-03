@@ -15,53 +15,59 @@ const render = require("./lib/htmlRenderer");
 // and to create objects for each team member (using the correct classes as blueprints!)
 
 const questions = [
+    inquire.prompt([
+        {
+            type: "input",
+            name: "name",
+            message: "What is the employee's name?",
+        },
+        {
+            type: "input",
+            name: "id",
+            message: "What is the employee's ID?",
+        },
+        {
+            type: "input",
+            name: "email",
+            message: "What is employee's email?",
+        },
+        {
+            type: "list",
+            name: "role",
+            message: "Enter employee's role:",
+            choices: ['Manager', 'Engineer', 'Intern'],
+        },
 
-    {
-        type: "input",
-        name: "",
-        message: "What is the title of your project?",
-    },
-    {
-        type: "input",
-        name: "projectdescription",
-        message: "Give a description of your project",
-    },
-    {
-        type: "input",
-        name: "projectinstall",
-        message: "Is there anything to install?",
-    },
-    {
-        type: "input",
-        name: "usage",
-        message: "What are the instructions for the project?",
-    },
-    {
-        type: "input",
-        name: "licenses",
-        message: "Are there any licences to list?",
-    },
-    {
-        type: "input",
-        name: "contribute",
-        message: "Did anyone else contribute to this project?",
-    },
-    {
-        type: "input",
-        name: "tests",
-        message: "Did you create any tests?",
-    },
-    {
-        type: "input",
-        name: "githubusername",
-        message: "What is your Github username?",
-    },
-    {
-        type: "input",
-        name: "email",
-        message: "What is your email address?",
-    },
-];
+        {
+            type: "input",
+            name: "intern",
+            message: "Enter the school the Intern attends",
+            when: (answers) => answers.role === 'Intern'
+        },
+        {
+            type: "input",
+            name: "manager",
+            message: "Enter the office number for the Manager",
+            when: (answers) => answers.role === 'Manager'
+        },
+        {
+            type: "input",
+            name: "engineer",
+            message: "Enter the GitHub for the Engineer",
+            when: (answers) => answers.role === 'Engineer'
+        },
+        {
+            type: "confirm",
+            name: "another",
+            message: "Is there another team member to add?",
+            choices: ['Yes', 'No']
+        },
+
+    ])
+
+
+    .then(function(response)) {
+    }
 
 
 // After the user has input all employees desired, call the `render` function (required
