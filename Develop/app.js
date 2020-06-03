@@ -16,7 +16,7 @@ const render = require("./lib/htmlRenderer");
 
 const data = [];
 
-function questions() {
+function promptQuestions() {
     inquire.prompt([
         {
             type: "input",
@@ -78,6 +78,32 @@ function questions() {
     let github = response.github;
     let officenumber = response.officenumber
 
+    if (role === "Engineer") {
+        let engineer = new Engineer(name, id, email, github)
+        data(engineer);
+    } if (response.another === true) {
+        promptQuestions();
+    } else {
+        renderHtml();
+    }
+
+    if (role === "Intern") {
+        let intern = new Intern (name, id, email, school)
+        data(intern);
+    } if (response.another === true) {
+        promptQuestions();
+    } else {
+        renderHtml();
+    }
+
+    if (role === "Manager") {
+        let manager = new Manager(name, id, email, officenumber)
+        data(manager);
+    } if (response.another === true) {
+        promptQuestions();
+    } else {
+        renderHtml();
+    }
 }
 
 
