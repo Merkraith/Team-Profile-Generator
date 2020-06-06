@@ -97,88 +97,38 @@ function employeeQuestions {
                 choices: ["Yes", "No"]
             }
         ])
-        .then(function (response)) {
+        .then(function (response) {
         let employeeName = response.employeeName;
         let employeeId = response.employeeId;
         let employeeEmail = response.employeeEmail;
         let role = response.role;
         let github = response.employeeGithub;
         let school = response.internSchool;
-        
-    }
+
+        if (role === "Engineer") {
+            let engineer = new Engineer(employeeName, employeeId, employeeEmail, employeeGithub)
+            employees.push(engineer);
+        } if (response.again === "Yes") {
+            employeeQuestions();
+        } else {
+            renderHtml();
+        }
+        if (role === "Intern") {
+            let engineer = new Intern(employeeName, employeeId, employeeEmail, employeeGithub)
+            employees.push(intern);
+        } if (response.again === "Yes") {
+            employeeQuestions();
+        } else {
+            renderHtml();
+        }
+
+    });
+};
+
+function renderHtml() {
+    let html = render(employeesArr);
+    return writeFileAsync(outputPath, html);
 }
-
-
-    //     .then(function (response)) {
-    // let Name = response.Name;
-    // let email = response.email;
-    // let id = response.id;
-    // let role = response.role;
-    // let school = response.school;
-    // let github = response.github;
-//     let officenumber = response.officenumber
-
-//     if (role === "Engineer") {
-//         let engineer = new Engineer(name, id, email, github)
-//         employees(engineer);
-//     } if (response.another === true) {
-//         promptQuestions();
-//     } else {
-//         renderHtml();
-//     }
-
-//     if (role === "Intern") {
-//         let intern = new Intern(name, id, email, school)
-//         employees(intern);
-//     } if (response.another === true) {
-//         promptQuestions();
-//     } else {
-//         renderHtml();
-//     }
-
-//     if (role === "Manager") {
-//         let manager = new Manager(name, id, email, officenumber)
-//         employees(manager);
-//     } if (response.another === true) {
-//         promptQuestions();
-//     } else {
-//         renderHtml();
-//     }
-// }
-
-
-
-// {
-//     type: "list",
-//     name: "role",
-//     message: "Enter employee's role:",
-//     choices: ["Manager", "Engineer", "Intern"],
-// },
-// {
-//     type: "input",
-//     name: "intern",
-//     message: "Enter the school the Intern attends",
-//     when: (answers) => answers.role === 'Intern'
-// },
-// {
-//     type: "input",
-//     name: "manager",
-//     message: "Enter the office number for the Manager",
-//     when: (answers) => answers.role === 'Manager'
-// },
-// {
-//     type: "input",
-//     name: "engineer",
-//     message: "Enter the GitHub for the Engineer",
-//     when: (answers) => answers.role === 'Engineer'
-// },
-// {
-//     type: "confirm",
-//     name: "another",
-//     message: "Is there another team member to add?",
-//     choices: ['Yes', 'No']
-// },
-
 
 
 
