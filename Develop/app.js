@@ -11,6 +11,7 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+const writeFileAsync = util.promisify(fs.writeFile);
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
@@ -19,7 +20,7 @@ const employees = [];
 startQuestionsManager();
 
 function startQuestionsManager() {
-    inquire
+    inquirer
         .prompt([
             {
                 type: "input",
@@ -38,24 +39,26 @@ function startQuestionsManager() {
             },
             {
                 type: "input",
-                name: "managerPhoneNumber",
+                name: "officeNumber",
                 message: "What is manager's phone number?",
+                default: "Enter 10-digits",
             }
         ])
         .then(function (response) {
             let managerName = response.managerName;
             let managerId = response.managerId;
             let managerEmail = response.managerEmail;
-            let managerPhoneNumber = response.managerPhoneNumber;
-            let manager = new Manager(managerName, managerId, managerEmail, managerPhoneNumber);
+            let officeNumber = response.officeNumber;
+            let manager = new Manager(managerName, managerId, managerEmail, officeNumber);
             employees.push(manager);
             employeeQuestions();
         });
 }
 
-function employeeQuestions {
-    inquire
-        .prompt([
+function employeeQuestions() {
+    inquirer
+        .prompt
+        ([
 
             {
                 type: "input",
@@ -80,7 +83,7 @@ function employeeQuestions {
             },
             {
                 type: "input",
-                name: "employeeGitHub",
+                name: "github",
                 message: "What is employee's GitHub Username?",
                 when: (answers) => answers.role === "Engineer"
             },
@@ -98,32 +101,35 @@ function employeeQuestions {
             }
         ])
         .then(function (response) {
-        let employeeName = response.employeeName;
-        let employeeId = response.employeeId;
-        let employeeEmail = response.employeeEmail;
-        let role = response.role;
-        let github = response.employeeGithub;
-        let school = response.internSchool;
+            let employeeName = response.employeeName;
+            let employeeId = response.employeeId;
+            let employeeEmail = response.employeeEmail;
+            let role = response.role;
+            let github = response.github;
+            let school = response.internSchool;
 
-        if (role === "Engineer") {
-            let engineer = new Engineer(employeeName, employeeId, employeeEmail, employeeGithub)
-            employees.push(engineer);
-        } if (response.again === "Yes") {
-            employeeQuestions();
-        } else {
-            renderHtml();
-        }
-        if (role === "Intern") {
-            let engineer = new Intern(employeeName, employeeId, employeeEmail, employeeGithub)
-            employees.push(intern);
-        } if (response.again === "Yes") {
-            employeeQuestions();
-        } else {
-            renderHtml();
-        }
+            if (role === "Engineer") {
+                let engineer = new Engineer(employeeName, employeeId, employeeEmail, github)
+                employees.push(engineer);
+            } if (response.again === "Yes") {
+                employeeQuestions();
+            } else {
+                renderHtml();
+            }
+            if (role === "Intern") {
+                let engineer = new Intern(employeeName, employeeId, employeeEmail, school)
+                employees.push(intern);
+                if (response.again === "Yes") {
+                    employeeQuestions();
+                } else {
+                    renderHtml();
+                }
 
-    });
+            };
+        });
 };
+
+
 
 function renderHtml() {
     let html = render(employeesArr);
