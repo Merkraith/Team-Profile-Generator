@@ -117,7 +117,7 @@ function employeeQuestions() {
                 renderHtml();
             }
             if (role === "Intern") {
-                let engineer = new Intern(employeeName, employeeId, employeeEmail, school)
+                let intern = new Intern(employeeName, employeeId, employeeEmail, school)
                 employees.push(intern);
                 if (response.again === "Yes") {
                     employeeQuestions();
@@ -132,7 +132,7 @@ function employeeQuestions() {
 
 
 function renderHtml() {
-    let html = render(employeesArr);
+    let html = render(employees);
     return writeFileAsync(outputPath, html);
 }
 
