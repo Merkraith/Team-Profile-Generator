@@ -116,7 +116,7 @@ function employeeQuestions() {
             } else {
                 renderHtml();
             }
-            if (role === "Intern") {
+         if (role === "Intern") {
                 let intern = new Intern(employeeName, employeeId, employeeEmail, school)
                 employees.push(intern);
                 if (response.again === "Yes") {
